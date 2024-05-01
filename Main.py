@@ -1,6 +1,8 @@
 import psutil as ps
+
 import platform
 import subprocess
+import wmi
 from bs4 import BeautifulSoup
 def getBatteryReport():
     subprocess.run(['powercfg', '/batteryreport', '/output', 'battery_report.html'], capture_output=True)
@@ -37,9 +39,6 @@ def getBatteryCapacity():
                     if len(pair) == 3:
                         Battery_Capacity.append(int(pair[1].split(" ")[0].replace(",","")))
     return Battery_Capacity
-import wmi
-
 computer = wmi.WMI()
 system_info = computer.Win32_ComputerSystem()[0]
-print(f"Manufacturer: {system_info.Manufacturer}")
-print(f"Model: {system_info.Model}")
+print(f"Manufacturer: {system_info.Manufacturer} {system_info.Model}")
