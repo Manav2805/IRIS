@@ -1,8 +1,8 @@
 import os
 import time
-from tkinter import Tk, Canvas, Button, PhotoImage, font
+from tkinter import Tk, Canvas, Button, font
 
-from Information import setAnalyzeInfo, setInfoData, setInfoGraph
+from Information import setAnalyzeInfo, setInfoData, setInfoGraph, setHomeGraph,setHomeInfo
 
 def setHome(canvas, window):
     canvas = Canvas(
@@ -63,7 +63,7 @@ def setHome(canvas, window):
         404.0,
         399.0,
         anchor="nw",
-        text="Usage",
+        text="Count",
         fill="#FFFFFF",
         font=("Inter", 20 * -1)
     )
@@ -81,7 +81,7 @@ def setHome(canvas, window):
         404.0,
         534.0,
         anchor="nw",
-        text="Processes",
+        text="Interrupts",
         fill="#FFFFFF",
         font=("Inter", 20 * -1)
     )
@@ -201,6 +201,14 @@ def setHome(canvas, window):
         width=155.0,
         height=56.0
     )
+    setHomeInfo(canvas,window,Info_Button,Analyze_Button)
+    Home_result = setHomeGraph(canvas,window,Info_Button,Analyze_Button)
+    Info_Button.config(command = lambda: setInfo(canvas,window))
+    Analyze_Button.config(command = lambda: setAnalyze(canvas,window))
+    if Home_result == "I":
+        Info_Button.invoke()
+    elif Home_result == "A":
+        Analyze_Button.invoke()
 
 def setInfo(canvas,window):
     canvas = Canvas(
@@ -212,14 +220,14 @@ def setInfo(canvas,window):
     highlightthickness = 0,
     relief = "ridge"
 )
-
+    canvas.place(x = 0, y = 0)
     canvas.create_text(
         10.0,
         480.0,
         anchor="nw",
         text="IRIS is a system analysis software that I made during the summer. The primary aim is to give general system information along with the option to portray the battery report in a condensed form. This would help users check on their battery health and other information without the need to visit the multiple obscure documents and tutorial videos.\n\nThis is version 1.0",
         fill="#FFFFFF",
-        font=("Inter", 15 * -1),
+        font=("Inter", 15 * -1),    
         width = 1050
     )
     canvas.create_rectangle(
@@ -305,7 +313,7 @@ def setInfo(canvas,window):
         421.0,
         114.0,
         anchor="nw",
-        text="Average Response Time",
+        text="Average Response Time (ms)",
         fill="#1E1E1E",
         font=("Inter", 25 * -1)
     )
@@ -357,13 +365,12 @@ def setInfo(canvas,window):
         height=56.0
     )
     setInfoData(canvas)
-    canvas.place(x = 0, y = 0)
-    result = setInfoGraph(canvas,window,Home_Button,Analyze_Button)
+    Info_result = setInfoGraph(canvas,window,Home_Button,Analyze_Button)
     Home_Button.config(command = lambda: setHome(canvas,window))
     Analyze_Button.config(command = lambda: setAnalyze(canvas,window))
-    if result == "H":
+    if Info_result == "H":
         Home_Button.invoke()
-    elif result == "A":
+    elif Info_result == "A":
         Analyze_Button.invoke()
 
 def setAnalyze(canvas, window):
@@ -586,7 +593,7 @@ def setGUI():
         404.0,
         399.0,
         anchor="nw",
-        text="Usage",
+        text="Count",
         fill="#FFFFFF",
         font=("Inter", 20 * -1)
     )
@@ -604,7 +611,7 @@ def setGUI():
         404.0,
         534.0,
         anchor="nw",
-        text="Processes",
+        text="Interrupts",
         fill="#FFFFFF",
         font=("Inter", 20 * -1)
     )
@@ -724,8 +731,19 @@ def setGUI():
         width=155.0,
         height=56.0
     )
+    setHomeInfo(canvas,window,Info_Button,Analyze_Button)
+    GUI_result = setHomeGraph(canvas,window,Info_Button,Analyze_Button)
+    Info_Button.config(command = lambda: setInfo(canvas,window))
+    Analyze_Button.config(command = lambda: setAnalyze(canvas,window))
+    if GUI_result == "I":
+        Info_Button.invoke()
+    elif GUI_result == "A":
+        Analyze_Button.invoke()
     window.resizable(False, False)
+    window.title("IRIS")
     window.mainloop()
     return canvas
-setGUI()
-os._exit(0)
+try:
+    setGUI()
+except:
+    os._exit(0)
