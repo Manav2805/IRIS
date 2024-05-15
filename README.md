@@ -5,7 +5,7 @@ IRIS is a system monitoring program that I made during summer. The main aim was 
 Run the requirements.txt file to run all the modules necessary to run the program. The program can then be accessed by running main.py
 
 ## Possibile Errors
-The software is indended to be run on windows operating system. Other os compatibility is not explored.
+The software is intended to be run on windows operating system. Other os compatibility is not explored.
 
 The program uses multi-threading in python which can cause unexpected errors. It should go away by rerunning the program. Feel free to inform me about the problem if it pertains.
 
